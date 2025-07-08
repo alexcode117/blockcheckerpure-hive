@@ -38,6 +38,33 @@ node check-transfer.js
 - Incluye manejo de errores
 - Usa emojis para mejor visualización
 
+### 👤 `check-account.js` - Consulta de Cuentas
+**Obtiene información detallada de una cuenta específica**
+
+```bash
+node check-account.js
+```
+
+**Características:**
+- Consulta datos completos de una cuenta
+- Muestra balance, reputación, delegaciones
+- Información de metadatos y configuración
+- Útil para análisis de cuentas específicas
+
+### 📜 `check-account-history.js` - Historial de Cuentas
+**Analiza el historial de operaciones de una cuenta**
+
+```bash
+node check-account-history.js
+```
+
+**Características:**
+- Muestra las últimas operaciones de una cuenta
+- Filtra y formatea diferentes tipos de operaciones
+- Incluye detalles específicos por tipo (transferencias, votos, comentarios)
+- Configurable número de operaciones a mostrar
+- Interfaz visual mejorada con emojis
+
 ## 🎯 ¿Qué puedes aprender?
 
 ### 🔗 Conceptos de Hive Blockchain
@@ -45,6 +72,8 @@ node check-transfer.js
 - **Transacciones**: Agrupaciones de operaciones relacionadas
 - **Operaciones**: Acciones específicas (votos, transferencias, posts)
 - **Nodos**: Servidores que mantienen la red
+- **Cuentas**: Entidades con balances y reputación en la red
+- **Historial**: Registro completo de todas las operaciones de una cuenta
 
 ### 📊 Tipos de Operaciones que Observarás
 - `vote`: Votar por contenido de otros usuarios
@@ -77,6 +106,12 @@ node check-block.js
 
 # Monitor específico de transferencias
 node check-transfer.js
+
+# Consulta información de cuenta
+node check-account.js
+
+# Analiza historial de cuenta
+node check-account-history.js
 ```
 
 ## 📖 Ejemplos de Salida
@@ -97,6 +132,38 @@ Datos: { from: 'usuario1', to: 'usuario2', amount: '1.000 HIVE' }
     De: usuario1 
     Para: usuario2
     Monto: 1.000 HIVE
+```
+
+### Consulta de Cuenta (`check-account.js`)
+```
+{
+  name: 'alexcode117',
+  balance: '100.000 HIVE',
+  hbd_balance: '50.000 HBD',
+  reputation: '1234567890',
+  ...
+}
+```
+
+### Historial de Cuenta (`check-account-history.js`)
+```
+📜 Últimas 3 operaciones de alexcode117:
+
+🔹 ID: 123456 | Bloque: 78901234
+🕒 2024-01-15T10:30:00 | Tipo: transfer
+💸 TRANSFERENCIA: 
+    De: alexcode117
+    Para: usuario2
+    Monto: 1.000 HIVE
+    Memo: --sin memo--
+
+🔹 ID: 123455 | Bloque: 78901233
+🕒 2024-01-15T10:25:00 | Tipo: vote
+⬆️ VOTO: 
+    Votante: alexcode117
+    Autor: usuario3
+    Post: mi-post
+    Peso: 100%
 ```
 
 ## 🔧 Personalización Avanzada
@@ -123,6 +190,28 @@ if (type === 'transfer' && parseFloat(data.amount) > 100) {
 }
 ```
 
+### Personalizar Consultas de Cuenta
+```javascript
+// Cambiar la cuenta a consultar
+const accounts = await client.database.getAccounts(['tu-usuario']);
+
+// Obtener múltiples cuentas
+const accounts = await client.database.getAccounts(['usuario1', 'usuario2']);
+```
+
+### Configurar Historial de Cuenta
+```javascript
+// Cambiar cuenta y número de operaciones
+analizarHistorial('tu-usuario', 10); // Últimas 10 operaciones
+
+// Obtener operaciones desde un punto específico
+const historial = await client.database.getAccountHistory(
+  cuenta, 
+  startingPoint,  // ID de operación específico
+  limite
+);
+```
+
 ### Agregar Nuevas Herramientas
 Crea nuevos archivos como `check-votes.js`, `check-posts.js`, etc., siguiendo el patrón establecido.
 
@@ -139,6 +228,9 @@ Crea nuevos archivos como `check-votes.js`, `check-posts.js`, etc., siguiendo el
 2. **Monitor de Usuarios**: Seguir la actividad de usuarios específicos
 3. **Estadísticas en Tiempo Real**: Contar tipos de operaciones por minuto
 4. **Alertas Personalizadas**: Notificar cuando ocurran eventos específicos
+5. **Comparador de Cuentas**: Analizar y comparar múltiples cuentas
+6. **Análisis de Reputación**: Seguir cambios en la reputación de cuentas
+7. **Monitor de Delegaciones**: Rastrear delegaciones de poder de voto
 
 ## 🤝 Contribuir
 
